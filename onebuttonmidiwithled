@@ -1,0 +1,38 @@
+#include <MIDI.h>
+MIDI_CREATE_DEFAULT_INSTANCE();
+
+const int Button1 = 2; //button one is on digital pin nr 2
+int buttonState = 0; 
+
+const int led = 13;
+
+void setup()
+{
+  MIDI.begin(MIDI_CHANNEL_OMNI);
+  pinMode(Button1, INPUT);    // we use button/pin2 as an input
+  pinMode(led, OUTPUT);
+
+}
+
+void loop()
+{
+
+    buttonState = digitalRead(Button1); //what's the button doin? 
+
+    // button is doing somethin
+if (buttonState == HIGH) {
+  MIDI.sendNoteOn(60,127,9); 
+  digitalWrite(led, HIGH);
+
+   delay(50);	
+
+  } else {
+    // button is not doing anything
+  MIDI.sendNoteOff(60,0,9); 
+    digitalWrite(led, LOW);
+
+    delay(50);	
+      }
+
+
+}
