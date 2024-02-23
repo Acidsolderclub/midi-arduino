@@ -1,0 +1,33 @@
+#include <MIDI.h>
+
+const int numPans = 6;
+const int panPins[numPans] = {A1, A2, A4, A7, A3, A6};
+const int midiNotes[numPans] = {60, 62, 64, 67, 69, 72};
+const int midiThresholds[numPans] = {6, 10, 10, 10, 20, 10};
+const int midiMaxValues[numPans] = {60, 500, 180, 800, 100, 200};
+
+MIDI_CREATE_DEFAULT_INSTANCE();
+
+void setup() {
+  // Initialize serial communication for debugging
+  Serial.begin(9600);
+  
+  // Initialize MIDI communications
+  MIDI.begin(MIDI_CHANNEL_OMNI);
+}
+
+void loop() {
+  for (int i = 0; i < numPans; i++) {
+    int vapeIntens = analogRead(panPins[i]);
+    int midiValue = map(vapeIntens, 0, midiMaxValues[i], 0, 127);
+    
+    // Send MIDI note on if above threshold, else off
+    if (midiValue > midiThresholds[i]) {
+      MIDI.sendNoteOn(midiNotes[i], midiValue, 2);
+    } else {
+      MIDI.sendNoteOn(midiNotes[i], 0, 2);
+    }
+    
+    delay(50);
+  }
+}
