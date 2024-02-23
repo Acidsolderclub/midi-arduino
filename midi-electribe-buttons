@@ -1,0 +1,157 @@
+
+#include <MIDI.h>
+
+MIDI_CREATE_DEFAULT_INSTANCE();
+
+//SMASHEY DINGEN
+const int Smashy = 10; 
+const int Smashyled =11;    
+
+//DRUMS
+const int But1 = 2; //KICK
+const int But2 = 3; //SNARE
+const int But3 = 4; //HAT
+const int But4 = 5; //SYNTH
+const int But5 = 6; //BLEEPJE
+const int But6 = 7; //STEM
+
+
+//DRUMS STATE
+int buttonState = 0; 
+int buttonState2 = 0;  
+int buttonState3 = 0;  
+int buttonState4 = 0;  
+int buttonState5 = 0;  
+int buttonState6 = 0;  
+int buttonState7 = 0;  
+
+
+
+void setup() {
+  MIDI.begin(MIDI_CHANNEL_OFF); 
+
+  //SMASHYLED
+  pinMode(Smashyled, OUTPUT);
+  //Smashy
+  pinMode(Smashy, INPUT);
+
+  
+  //andere buttons
+  pinMode(But1, INPUT);
+  pinMode(But2, INPUT);
+  pinMode(But3, INPUT);
+  pinMode(But4, INPUT);
+  pinMode(But5, INPUT);
+  pinMode(But6, INPUT);
+}
+
+
+
+void loop() {
+
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(Smashy);
+  buttonState2 = digitalRead(But1); //KICK
+  buttonState3 = digitalRead(But2); //SNARE
+  buttonState4 = digitalRead(But3); //HAT
+  buttonState5 = digitalRead(But4); //SYNTH
+  buttonState6 = digitalRead(But5);
+  buttonState7 = digitalRead(But6);
+
+
+
+// KICK
+  if (buttonState == HIGH) {
+  MIDI.sendNoteOn(60,127,9); 
+  digitalWrite(Smashyled, HIGH);
+   delay(50);	
+
+  } else {
+    // turn LED off:
+  MIDI.sendNoteOff(60,0,9); 
+  digitalWrite(Smashyled, LOW);
+   }
+
+
+
+//SNARE
+  if (buttonState2 == HIGH) {
+  MIDI.sendNoteOn(60,127,10); 
+  digitalWrite(Smashyled, HIGH);
+   delay(50);	
+
+  } else {
+    // turn LED off:
+  MIDI.sendNoteOff(60,0,10);
+   }
+
+
+
+//HITHAT
+  if (buttonState3 == HIGH) {
+  MIDI.sendNoteOn(60,127,13); 
+  digitalWrite(Smashyled, HIGH);
+   delay(50);	
+
+  } else {
+    // turn LED off:
+  MIDI.sendNoteOff(60,0,13);
+   }
+
+
+
+//SYNTH
+  if (buttonState4 == HIGH) {
+  MIDI.sendNoteOn(60,127,1); 
+  digitalWrite(Smashyled, HIGH);
+   delay(50);	
+
+  } else {
+    // turn LED off:
+  MIDI.sendNoteOff(60,0,1);
+   }
+
+
+//CLAP
+  if (buttonState5 == HIGH) {
+  MIDI.sendNoteOn(60,127,12); 
+  digitalWrite(Smashyled, HIGH);
+   delay(50);	
+
+  } else {
+    // turn LED off:
+  MIDI.sendNoteOff(60,0,12);
+   }
+
+
+
+//BLEEPJE
+  if (buttonState6 == HIGH) {
+  MIDI.sendNoteOn(77,127,7); 
+  digitalWrite(Smashyled, HIGH);
+   delay(50);	
+
+  } else {
+    // turn LED off:
+  MIDI.sendNoteOff(77,0,7);
+   }
+
+
+
+
+//STEM
+  if (buttonState7 == HIGH) {
+  MIDI.sendNoteOn(60,127,16); 
+  digitalWrite(Smashyled, HIGH);
+   delay(50);	
+
+  } else {
+    // turn LED off:
+  MIDI.sendNoteOff(60,0,16);
+   }
+
+
+
+  delay(50);	
+
+}
