@@ -1,0 +1,37 @@
+#include <MIDI.h>
+
+const int analoginput = A1; //analog sensor connected to A1
+
+MIDI_CREATE_DEFAULT_INSTANCE();
+
+void setup() {
+  // Initialize seial communication for debugging
+  Serial.begin(9600);
+  
+  // Initialize MIDI communications
+  MIDI.begin(MIDI_CHANNEL_OMNI);
+}
+
+void loop() {
+  //first ldr sensor
+  int sensorvalue = analogRead(A1);
+
+  //map input sensitivity to values midi is happy with
+  int midiValue = map(sensorvalue, 0, 100, 0, 127);
+
+  //when the sensor rises above 50 value, send volume up
+  if (midiValue > 50) {
+  MIDI.sendNoteOn(60,midiValue,10); 
+  delay(50);
+  }
+  //when sensorvalue under 50 value, send no velocity(volume)
+    if (midiValue < 50) {
+  MIDI.sendNoteOn(60,0,10); 
+  delay(50);
+}
+
+
+
+
+
+}
