@@ -1,0 +1,128 @@
+#include <MIDI.h>
+
+const int pan1 = A1;
+const int pan2 = A2;
+const int pan3 = A4;
+const int pan4 = A7;
+const int pan5 = A3;
+const int pan6 = A6;
+
+MIDI_CREATE_DEFAULT_INSTANCE();
+
+void setup() {
+  // Initialize serial communication for debugging
+  Serial.begin(9600);
+  
+  // Initialize MIDI communications
+  MIDI.begin(MIDI_CHANNEL_OMNI);
+}
+
+void loop() {
+  //vape 1 
+  int vapeintens = analogRead(pan1);
+  //vape 2
+  int vapeintens2 = analogRead(pan2);
+  //vape 3 
+  int vapeintens3 = analogRead(pan3);
+  //vape 4
+  int vapeintens4 = analogRead(pan4);
+  //vape 5
+  int vapeintens5 = analogRead(pan5);
+  //vape 6
+  int vapeintens6 = analogRead(pan6);
+
+
+
+ //INTENSITY SHIZZLE OMZETTEN
+
+  //Vape 1 waardes tussen 6-60
+  int midiValue = map(vapeintens, 0, 100, 0, 127);
+
+  //Vape 2 waardes tusse 20-500
+  int midiValue2 = map(vapeintens2, 0, 600, 0, 127);
+
+  //Vape 3 waardes tussen 50-180
+  int midiValue3 = map(vapeintens3, 0, 1023, 0, 127);
+
+  //Vape 4 waardes tussen 0 -800
+  int midiValue4 = map(vapeintens4, 0, 1000, 0, 127);
+
+  //Vape 5 waardes tussen 30-90
+  int midiValue5 = map(vapeintens5, 0,200, 0, 127);
+
+  //Vape 6 waardes tussen 10-600
+  int midiValue6 = map(vapeintens6, 0, 200, 0, 127);
+
+
+// SCALE PENTATONIC MINOR 
+
+ ///VAPE 1 AAN uit gezelligheid C
+  if (midiValue > 5) {
+  MIDI.sendNoteOn(60,midiValue,10); 
+  delay(50);
+  }
+    if (midiValue < 5) {
+  MIDI.sendNoteOn(60,0,10); 
+  delay(50);
+}
+
+
+ ///VAPE 2 AAN uit gezelligheid D
+  if (midiValue2 > 20) {
+  MIDI.sendNoteOn(62,midiValue2,10); 
+  delay(50);
+  }
+    if (midiValue2 < 20) {
+  MIDI.sendNoteOn(62,0,10); 
+  delay(50);
+}
+
+
+ ///VAPE 3 AAN uit gezelligheid E 
+  if (midiValue3 > 20) {
+  MIDI.sendNoteOn(64,midiValue3,10); 
+  delay(50);
+  }
+    if (midiValue3 < 20) {
+  MIDI.sendNoteOn(64,0,10); 
+  delay(50);
+}
+
+
+ ///VAPE 4 AAN uit gezelligheid G
+  if (midiValue4 > 10) {
+  MIDI.sendNoteOn(67,midiValue4,10); 
+  delay(50);
+  }
+    if (midiValue4 < 10) {
+  MIDI.sendNoteOn(67,0,10); 
+  delay(50);
+}
+
+
+ ///VAPE 5 AAN uit gezelligheid A
+  if (midiValue5 > 30) {
+  MIDI.sendNoteOn(69,midiValue5,10); 
+  delay(50);
+  }
+    if (midiValue5 < 30) {
+  MIDI.sendNoteOn(69,0,10); 
+  delay(50);
+}
+
+ ///VAPE 6 AAN uit gezelligheid C octaafje hoger
+  if (midiValue6 > 50) {
+  MIDI.sendNoteOn(72,midiValue6,10); 
+  delay(50);
+  }
+    if (midiValue6 < 50) {
+  MIDI.sendNoteOn(72,0,10); 
+  delay(50);
+}
+
+
+
+
+
+
+}
